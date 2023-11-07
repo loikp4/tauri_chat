@@ -1,23 +1,36 @@
 'use client'
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
+import { Grid } from '@material-ui/core';
 
 function GetmainComponent() {
-    const [Container,setContent] = useState<React.JSX.Element | null> (null);
-    
+    const [Content, setContent] = useState<React.JSX.Element | null>(null);
+
     useEffect(() => {
         setup();
-    },[]);
+    }, []);
 
     async function setup() {
         const Content = (await import("./messageInput")).default;
         setContent(<Content />);
     }
-    
+
     return (
         <>
-        <div>
-            {Container}
-        </div>
+            <div className='h-screen flex  flex-col justify-between'>
+                <Grid container spacing={3}>
+                    <Grid item xs={3}>
+                        {/* 左列のコンテンツ */}
+                        left
+                    </Grid>
+                    <Grid item xs={6}>
+                        {Content}
+                    </Grid>
+                    <Grid item xs={3}>
+                        right
+                    </Grid>
+                </Grid >
+
+            </div>
         </>
     )
 }
