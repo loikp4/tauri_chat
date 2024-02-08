@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { Grid } from '@material-ui/core';
+import Link from 'next/link';
 
 function GetmainComponent() {
     const [Content, setContent] = useState<React.JSX.Element | null>(null);
@@ -21,6 +22,7 @@ function GetmainComponent() {
                     <Grid item xs={3}>
                         {/* 左列のコンテンツ */}
                         left
+                        <Link href={'/testpage'}>link</Link>
                     </Grid>
                     <Grid item xs={6}>
                         {Content}

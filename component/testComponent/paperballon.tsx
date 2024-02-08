@@ -2,15 +2,34 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 
+import { CSSProperties } from 'react';
+
+interface BalloonContainerProps {
+  style?: CSSProperties;
+  alignRight?: boolean;
+  color?: string;
+  message?: string;
+}
 const useStyles = makeStyles((theme) => ({
+  balloonContainer:{
+    display: 'flex',
+    flexDirection : 'column',
+    alignItems: 'flex-start'
+  },
   balloon: {
     position: 'relative',
-    display: 'inline-block',
+    display: 'flex',
     padding: theme.spacing(2),
-    backgroundColor: '#00f500',
+    backgroundColor: (props: BalloonContainerProps) => props.color ||'#00f500',
     borderRadius: theme.spacing(2),
     boxShadow: theme.shadows[1],
+    ...(props: BalloonContainerProps) =>
+      props.alignRight && {
+        alignSelf: 'flex-end',
+      },
+      //先端に三角形がつくがコメントアウト
     /*'&::before': {
       content: '""',
       position: 'absolute',
@@ -23,14 +42,19 @@ const useStyles = makeStyles((theme) => ({
     },*/
   },
 }));
-type BalloonProps = React.PropsWithChildren<{}>;
-function PaperBalloon(props:BalloonProps) {
-    const classes = useStyles();
+
+type BalloonProps = React.PropsWithChildren<BalloonContainerProps>;
+function PaperBalloon({alignRight,color ,children,message}:BalloonProps) {
+    console.log("childr4en:",children)
+    const classes = useStyles({alignRight,color});
   
     return (
+    <div className={classes.balloonContainer}>
       <Paper className={classes.balloon}>
-        {props.children}
+        {children}
+        <Typography>{message}</Typography>
       </Paper>
+    </div>
     );
   }
   

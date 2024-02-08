@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react'
 import Toolbar from '@material-ui/core/Toolbar';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { initial } from './client';
+import PaperBalloon from '../testComponent/paperballon';
 //import WebSocket, { Message } from 'tauri-plugin-websocket-api';
 
 // カスタムイベントを作成します
@@ -40,26 +42,33 @@ export function mainContent() {
   const changeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setinputText(event.target.value)
   }
-  
+ 
+  // 送信用関数
   const sendtext = () => {
     setTexts(prevTexts => [...prevTexts, inputText]);
     socketRef.current?.send(inputText);
-    setinputText('');//入力フィーるどのクリア
+    setinputText('');//入力フィールドのクリア
+  }
+  const functest = () => {
+    initial();
   }
   return (
     <div className='app flex flex-col'>
       <header>
-
       </header>
-      <div className='print'>
-        {texts.map((text, index) => <p key={index}>{text}</p>)} {/* テキストデータの配列をマップして表示 */}
-      </div>
-      <div className=''>
+      <div className='app flex flex-col'>
+        {texts.map((text, index) => 
+          <PaperBalloon key={index} alignRight={true} >
+          {text}
+          </PaperBalloon>
+        )} {/* テキストデータの配列をマップして表示 */}
       </div>
       <AppBar position="static" color="primary" className='mt-auto'>
         <Toolbar>
-          <TextField value={inputText} onChange={changeInput} type="text" placeholder="入力してボタンを押してください。" style={{ flexGrow: 1 }} />
+          <TextField value={inputText} onChange={changeInput} type="text" placeholder="入力してボタンを押してください。" 
+          style={{ flexGrow: 1 }} />
           <Button color="inherit" onClick={sendtext}>送信</Button>
+          <Button color="inherit" onClick={functest}>functest</Button>
         </Toolbar>
       </AppBar>
     </div>
